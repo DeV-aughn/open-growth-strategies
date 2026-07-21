@@ -141,6 +141,11 @@ export function WebGLShader({ className }: { className?: string }) {
       // on high-DPI screens (iPhone renders at 2×).
       const pr = refs.renderer.getPixelRatio();
       refs.uniforms.resolution.value = [w * pr, h * pr];
+      // Chromatic split scales with distance from center, so a higher distortion
+      // only shows at the beam's tail ends. Phones in portrait get a stronger
+      // split — the slim viewport crops the tails, so they need the extra punch.
+      const portraitPhone = w < 768 && h > w;
+      refs.uniforms.distortion.value = portraitPhone ? 0.22 : 0.05;
       if (reduceMotion) renderFrame();
     };
 
