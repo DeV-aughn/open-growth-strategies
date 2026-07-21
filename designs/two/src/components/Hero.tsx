@@ -1,7 +1,13 @@
+import { lazy, Suspense } from "react";
 import { motion } from "motion/react";
+import { ArrowRight } from "lucide-react";
 import { easeExpo } from "../lib/motion";
 import { brand, hero, proof } from "../content";
-import { WebGLShader } from "./ui/web-gl-shader";
+
+// Code-split Three.js so it doesn't block first paint (~500KB off the initial bundle).
+const WebGLShader = lazy(() =>
+  import("./ui/web-gl-shader").then((m) => ({ default: m.WebGLShader }))
+);
 
 export function Hero() {
   return (
@@ -11,7 +17,9 @@ export function Hero() {
     >
       {/* WebGL shader background — 21st.dev · designali-in/web-gl-shader, scoped to the hero */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        <WebGLShader className="absolute inset-0 block h-full w-full" />
+        <Suspense fallback={null}>
+          <WebGLShader className="absolute inset-0 block h-full w-full" />
+        </Suspense>
         {/* readability wash + seam fades top/bottom into the canvas */}
         <div className="absolute inset-0 bg-canvas/40" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-canvas to-transparent" />
@@ -69,7 +77,8 @@ export function Hero() {
             {hero.ctaPrimary}
           </a>
           <a href="#engine" className="btn btn-secondary btn-lg">
-            {hero.ctaSecondary} <span aria-hidden>→</span>
+            {hero.ctaSecondary}
+            <ArrowRight size={17} aria-hidden />
           </a>
         </motion.div>
 

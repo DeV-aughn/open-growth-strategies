@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Check } from "lucide-react";
 import { Reveal, stagger, staggerChild } from "../lib/motion";
 import { brand, pricing } from "../content";
 import { SectionHeader } from "./SectionHeader";
@@ -49,9 +50,11 @@ export function Pricing() {
               <ul className="mt-6 flex-1 space-y-2.5 border-t border-hairline pt-5">
                 {tier.features.map((f) => (
                   <li key={f} className="flex gap-2.5 text-[0.9rem] text-ink-muted">
-                    <span className="mt-[3px] text-success" aria-hidden>
-                      ✓
-                    </span>
+                    <Check
+                      size={16}
+                      className="mt-[2px] shrink-0 text-success"
+                      aria-hidden
+                    />
                     {f}
                   </li>
                 ))}

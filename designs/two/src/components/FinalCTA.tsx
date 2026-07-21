@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import { Reveal } from "../lib/motion";
 import { brand, finalCta } from "../content";
 import { AIBookingAgent } from "./ui/ai-booking-agent";
@@ -35,9 +36,7 @@ export function FinalCTA() {
                       key={m}
                       className="flex items-center gap-1.5 text-[0.8rem] text-ink-subtle"
                     >
-                      <span className="text-success" aria-hidden>
-                        ✓
-                      </span>
+                      <Check size={15} className="shrink-0 text-success" aria-hidden />
                       {m}
                     </li>
                   ))}

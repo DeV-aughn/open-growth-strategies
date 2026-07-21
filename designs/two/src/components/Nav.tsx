@@ -4,12 +4,31 @@ import { brand, nav } from "../content";
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scroll-spy: highlight the nav item for the section in view
+  useEffect(() => {
+    const els = nav
+      .map((n) => document.getElementById(n.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
+    if (!els.length) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive("#" + e.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
   }, []);
 
   return (
@@ -38,15 +57,23 @@ export function Nav() {
         </a>
 
         <nav className="hidden md:flex items-center gap-7">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm text-ink-subtle hover:text-ink transition-colors"
-            >
-              {item.label}
-            </a>
-          ))}
+          {nav.map((item) => {
+            const isActive = active === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "true" : undefined}
+                className={`text-sm transition-colors ${
+                  isActive
+                    ? "text-ink font-medium"
+                    : "text-ink-subtle hover:text-ink"
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">

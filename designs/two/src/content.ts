@@ -33,7 +33,7 @@ export const hero = {
   headline: ["Your schedule fills,", "or you don't pay."],
   line2Lead: "or ",
   line2Accent: "you don't pay.",
-  sub: "Open Growth builds performance-priced marketing systems for pool, HVAC, plumbing and waste operators across North Carolina. $0 upfront. Pricing on the page. Every job tracked to the dollar.",
+  sub: "Open Growth is a performance-priced home services marketing agency for HVAC, plumbing, pool and junk removal operators across North Carolina. $0 upfront. Pricing on the page. Every job tracked to the dollar.",
   ctaPrimary: "Apply for a performance build",
   ctaSecondary: "See the engine",
 };
@@ -251,6 +251,10 @@ export const faq = {
     {
       q: "Who actually does the work?",
       a: "Alex on strategy, plus a three-person senior squad on build and media. Nothing is outsourced, and you'll always know the name of the person on your account.",
+    },
+    {
+      q: "Which trades and areas do you serve?",
+      a: "HVAC, plumbing, pool service, junk removal and waste operators across North Carolina — Charlotte, Raleigh, Durham, Greensboro, Wilmington and the surrounding metros. One operator per trade per market, so your leads are never shared.",
     },
   ],
 };

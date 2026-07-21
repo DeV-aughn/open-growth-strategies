@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "motion/react";
+import { MotionConfig, motion, useScroll, useSpring } from "motion/react";
 import { useLenis } from "./lib/useLenis";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
@@ -22,10 +22,12 @@ export default function App() {
   });
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="relative">
       <motion.div
         style={{ scaleX: progress }}
         className="fixed top-0 left-0 right-0 h-[2px] bg-accent origin-left z-[60]"
+        aria-hidden
       />
 
       <Nav />
@@ -44,5 +46,6 @@ export default function App() {
 
       <Footer />
     </div>
+    </MotionConfig>
   );
 }

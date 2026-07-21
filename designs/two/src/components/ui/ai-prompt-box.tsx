@@ -60,7 +60,7 @@ export function AIPromptBox({
           }
         }}
         placeholder={placeholder}
-        className="max-h-40 w-full resize-none bg-transparent px-2 pt-1.5 text-[0.95rem] leading-relaxed text-ink outline-none placeholder:text-ink-3"
+        className="max-h-40 w-full resize-none bg-transparent px-2 pt-1.5 text-base leading-relaxed text-ink outline-none placeholder:text-ink-3"
       />
       <div className="mt-1 flex items-center justify-between">
         <div className="flex items-center gap-1">
