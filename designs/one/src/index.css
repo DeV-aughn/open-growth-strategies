@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — warm paper + deep ink + a growth-green signal */
+  --color-paper: #f4f0e6;
+  --color-paper-dim: #eae5d7;
+  --color-paper-warm: #efe9db;
+  --color-ink: #0b0b08;
+  --color-ink-soft: #17170f;
+  --color-ink-mute: #6b6a5e;
+  --color-accent: #0a7a4f; /* deep emerald — accessible on paper */
+  --color-signal: #1fe089; /* bright signal green — pops on ink */
+  --color-signal-dim: #12c977;
+  --color-line: rgba(11, 11, 8, 0.12);
+  --color-line-soft: rgba(11, 11, 8, 0.07);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01", "cv11";
+  overflow-x: hidden;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+/* Fine paper grain overlay */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Display type niceties */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Animated highlight marker under keywords */
+.marker {
+  position: relative;
+  display: inline;
+  white-space: nowrap;
+}
+.marker > span {
+  position: relative;
+  z-index: 1;
+}
+.marker::after {
+  content: "";
+  position: absolute;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: 0.08em;
+  height: 0.36em;
+  background: var(--color-signal);
+  z-index: 0;
+  transform: scaleX(var(--marker, 1));
+  transform-origin: left;
+  border-radius: 2px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1;
+  padding: 1.05rem 1.6rem;
+  border-radius: 999px;
+  transition: transform 0.35s var(--ease-out-expo), background-color 0.3s ease,
+    color 0.3s ease, box-shadow 0.35s ease;
+  will-change: transform;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+.btn-primary:hover {
+  box-shadow: 0 14px 34px -12px rgba(11, 11, 8, 0.55);
+}
+.btn-signal {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+.btn-signal:hover {
+  box-shadow: 0 14px 34px -10px rgba(31, 224, 137, 0.6);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+}
+.btn-ghost:hover {
+  border-color: var(--color-ink);
+}
+
+/* Reusable containers */
+.container-x {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Hairline divider */
+.hairline {
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* Kill focus ring flash but keep a11y */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+
+/* Slow spin for the growth map ring */
+@keyframes slowspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .slowspin {
+    animation: none !important;
+  }
+}

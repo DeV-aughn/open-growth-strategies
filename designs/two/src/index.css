@@ -1,0 +1,390 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — ported from awesome-design-md / linear.app DESIGN.md.
+ * Dark canvas + four-step surface ladder + single lavender accent.
+ */
+@theme {
+  --color-canvas: #010102;
+  --color-surface-1: #0f1011;
+  --color-surface-2: #141516;
+  --color-surface-3: #18191a;
+  --color-surface-4: #191a1b;
+  --color-hairline: #23252a;
+  --color-hairline-strong: #34343a;
+  --color-hairline-3: #3e3e44;
+
+  --color-ink: #f7f8f8;
+  --color-ink-muted: #d0d6e0;
+  --color-ink-subtle: #8a8f98;
+  --color-ink-3: #62666d;
+
+  --color-accent: #5e6ad2;
+  --color-accent-hover: #828fff;
+  --color-accent-focus: #5e69d1;
+  --color-success: #27a644;
+
+  --font-sans: "Inter", "SF Pro Display", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01", "cv11";
+  overflow-x: hidden;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-focus);
+  outline-offset: 3px;
+}
+
+/* Display type — aggressive negative tracking per the Linear spec */
+.display {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+.display-md {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+/* Chromatic gradient text — echoes the hero shader's static R/G/B light split,
+   resolving into the brand lavender. Applied to the second headline line. */
+.chroma-text {
+  background-image: linear-gradient(
+    100deg,
+    #ff4d5e 0%,
+    #ff5f6d 8%,
+    #2fd98a 50%,
+    #5b6cff 92%,
+    #5e6ad2 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Animated footer sweep — a white highlight scanning across a black line
+   (white → black gradient in motion). */
+@keyframes footer-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: -200% 50%;
+  }
+}
+.footer-sweep {
+  background-image: linear-gradient(
+    90deg,
+    #23252a 0%,
+    #23252a 38%,
+    #ffffff 50%,
+    #23252a 62%,
+    #23252a 100%
+  );
+  background-size: 250% 100%;
+  animation: footer-sweep 5s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-sweep {
+    animation: none;
+  }
+}
+
+/* Animated section divider — a moving white → black sweep along the top edge,
+   replacing the static hairline section borders. */
+.section-rule {
+  position: relative;
+}
+.section-rule::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    #23252a 0%,
+    #23252a 38%,
+    #ffffff 50%,
+    #23252a 62%,
+    #23252a 100%
+  );
+  background-size: 250% 100%;
+  animation: footer-sweep 5s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-rule::before {
+    animation: none;
+    background: var(--color-hairline);
+  }
+}
+/* Proof (section 03) has a top fade overlay for its background paths — lift only
+   its divider above that overlay so the sweep still shows there. */
+#proof::before {
+  z-index: 1;
+}
+
+/* Eyebrow — positive tracking marks it as taxonomy */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-subtle);
+}
+
+/* Section number — the growthwebsites signature, in Linear clothes */
+.section-no {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-3);
+}
+
+/* Buttons — 8px corners, compact Linear spec. Never pill. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.25s var(--ease-out-expo);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+/* Liquid-metal button — brushed metallic gradient in the brand lavender with a
+   glossy top edge, cylindrical mid-band, and a slow sheen sweeping across. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    #aab1f0 0%,
+    #7580dd 30%,
+    #545fc2 50%,
+    #4a54b8 53%,
+    #6d78da 76%,
+    #8b95e8 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35), 0 6px 18px -6px rgba(94, 106, 210, 0.6);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  transition: filter 0.25s ease, transform 0.25s var(--ease-out-expo);
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 66%
+  );
+  background-size: 250% 100%;
+  animation: metal-sheen 4.5s linear infinite;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+@keyframes metal-sheen {
+  0% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -130% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::after,
+  .btn-secondary::after {
+    animation: none;
+  }
+}
+/* Liquid-metal button — dark gunmetal variant (same sheen as primary). */
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
+  color: var(--color-ink);
+  background: linear-gradient(
+    180deg,
+    #3a3d44 0%,
+    #24262b 30%,
+    #141519 50%,
+    #101116 53%,
+    #26282e 76%,
+    #363941 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.14),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5), 0 6px 16px -8px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  transition: filter 0.25s ease, transform 0.25s var(--ease-out-expo);
+}
+.btn-secondary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 66%
+  );
+  background-size: 250% 100%;
+  animation: metal-sheen 4.5s linear infinite;
+}
+.btn-secondary:hover {
+  filter: brightness(1.15);
+}
+.btn-inverse {
+  background: #ffffff;
+  color: #000000;
+}
+.btn-inverse:hover {
+  background: var(--color-ink-muted);
+}
+.btn-lg {
+  padding: 0.85rem 1.4rem;
+  font-size: 0.95rem;
+}
+
+/* Cards — surface-1 lift + hairline, 12px */
+.card {
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-hairline);
+  border-radius: 12px;
+}
+.card-2 {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 12px;
+}
+/* Faint top edge highlight — "pixel rendered" feel on lifted panels */
+.edge-lit {
+  position: relative;
+}
+.edge-lit::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.14),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Status pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--color-surface-2);
+  color: var(--color-ink-muted);
+  border: 1px solid var(--color-hairline);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.7rem;
+}
+
+/* Containers */
+.container-x {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 2.5rem;
+  }
+}
+
+.hairline-x {
+  height: 1px;
+  background: var(--color-hairline);
+}
+
+/* Metric number treatment */
+.metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 42s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}

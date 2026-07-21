@@ -1,0 +1,9 @@
+{
+  "name": "design-gallery",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gallery": "node serve.mjs"
+  },
+  "//": "Single local host for every design in this folder. Run: npm run gallery (or: node serve.mjs). Rebuild design one after edits: cd designs/one && npm run build"
+}

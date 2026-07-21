@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# vite cache
+.vite/
+.vite-temp/
+
+# build metadata
+*.tsbuildinfo
+
+# logs
+*.log
+
+# local machine config
+.claude/settings.local.json
+
+# OS cruft
+.DS_Store
+Thumbs.db
