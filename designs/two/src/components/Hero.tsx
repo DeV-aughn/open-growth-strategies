@@ -24,17 +24,14 @@ export function Hero() {
         <div className="absolute inset-0 bg-canvas/40" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-canvas to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-canvas" />
-        {/* Vignette — fade the shader to black around the entire hero perimeter */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(100% 88% at 50% 44%, transparent 20%, rgba(1,1,2,0.62) 48%, var(--color-canvas) 78%)",
-          }}
-        />
-        {/* Side fades — guarantee the left/right edges read fully black */}
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-canvas to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-52 bg-gradient-to-l from-canvas to-transparent" />
+        {/* Vignette — fade the shader to black around the entire hero perimeter
+            (lighter on phones so the beam survives a narrow portrait viewport) */}
+        <div className="hero-vignette absolute inset-0" />
+        {/* Side fades — guarantee the left/right edges read fully black.
+            At desktop widths these are edge treatments; at phone widths the full
+            160/208px would cover nearly the whole screen, so keep them slim. */}
+        <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-canvas to-transparent md:w-40" />
+        <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-canvas to-transparent md:w-52" />
       </div>
 
       <div className="container-x relative z-10">

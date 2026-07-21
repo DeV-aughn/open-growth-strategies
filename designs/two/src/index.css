@@ -63,6 +63,27 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* Hero vignette — phones get a wider transparent center so the WebGL beam
+   stays visible in portrait; desktop keeps the original tight perimeter fade. */
+.hero-vignette {
+  background: radial-gradient(
+    140% 88% at 50% 44%,
+    transparent 34%,
+    rgba(1, 1, 2, 0.55) 62%,
+    var(--color-canvas) 88%
+  );
+}
+@media (min-width: 768px) {
+  .hero-vignette {
+    background: radial-gradient(
+      100% 88% at 50% 44%,
+      transparent 20%,
+      rgba(1, 1, 2, 0.62) 48%,
+      var(--color-canvas) 78%
+    );
+  }
+}
+
 ::selection {
   background: var(--color-accent);
   color: #ffffff;

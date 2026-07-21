@@ -136,7 +136,11 @@ export function WebGLShader({ className }: { className?: string }) {
       if (!refs.renderer || !refs.uniforms) return;
       const { w, h } = measure();
       refs.renderer.setSize(w, h, false);
-      refs.uniforms.resolution.value = [w, h];
+      // gl_FragCoord is in device pixels, so the resolution uniform must be the
+      // drawing-buffer size (CSS px × pixel ratio) or the beam drifts off-center
+      // on high-DPI screens (iPhone renders at 2×).
+      const pr = refs.renderer.getPixelRatio();
+      refs.uniforms.resolution.value = [w * pr, h * pr];
       if (reduceMotion) renderFrame();
     };
 
